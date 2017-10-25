@@ -1,42 +1,34 @@
-import React, { Component } from 'react';
+import React from 'react';
+import Book from './Book';
+import PropTypes from 'prop-types';
 
-class ListBooks extends Component {
-  render() {
-    return (
-      <div className="list-books">
-        <h1>ListBooks is working</h1>
+const ListBooks = ({ shelf, books, title, updateShelf }) => {
+
+  let filteredBooks = books.filter((book) => {
+    return book.shelf === shelf;
+  });
+
+  return (
+    <div className="bookshelf">
+      <h2 className="bookshelf-title">{title}</h2>
+      <div className="bookshelf-books">
         <ol className="books-grid">
-          {this.props.books.map(function(book) {
-            return (
-              <li>
-                <div className="book">
-                  <div className="book-top">
-                    <div className="book-cover" style={{width: 128, height: 193, backgroundImage: `url(${book.imageLinks.smallThumbnail})`}}/>
-                    <div className="book-shelf-changer">
-                      <select>
-                        <option value="none" disabled>Move to...</option>
-                        <option value="currentlyReading">Currently Reading</option>
-                        <option value="wantToRead">Want to Read</option>
-                        <option value="read">Read</option>
-                        <option value="none">None</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div className="book-title">{book.title}</div>
-                  <div className="book-authors">{book.authors.map(function(author) {
-                    return author
-                  })}</div>
-                </div>
-              </li>
-
-            )
-          })}
+        {filteredBooks.map((book) => {
+          return (
+            <Book book={book} updateShelf={updateShelf} key={book.id} />
+          )
+        })}
         </ol>
       </div>
-    )
-  }
+    </div>
+  )
 }
 
 export default ListBooks;
 
-//How to do multiple maps - wasn't there a way to do it all in one place?
+ListBooks.propTypes = {
+  books: PropTypes.array.isRequired,
+  title: PropTypes.string.isRequired,
+  shelf: PropTypes.string.isRequired,
+  updateShelf: PropTypes.func.isRequired
+}
