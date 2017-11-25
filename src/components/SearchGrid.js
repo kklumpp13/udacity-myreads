@@ -7,7 +7,7 @@ const SearchGrid = ({books, updateShelf}) => {
     <ol className="books-grid">
       {books.map((book) => {
         return (
-          <Book book={book} updateShelf={updateShelf} key={book.id}/>
+          <Book book={book} updateShelf={updateShelf} key={book.id} />
         )
       })}
     </ol>

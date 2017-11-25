@@ -29,7 +29,24 @@ class BooksApp extends React.Component {
     let query = event.target.value;
 
     BooksAPI.search(query, 20).then((books) => {
-      this.setState({booksQuery: books})
+
+      let userBooks = this.state.books;
+
+      const updatedShelves = books.map(book => {
+        let existingBooks = userBooks.filter(userBook => {
+          return book.id === userBook.id;
+        });
+
+        let updatedShelf = existingBooks.length && existingBooks[0].shelf;
+
+        if (updatedShelf) {
+          return {...book, ...{shelf: updatedShelf}};
+        } else {
+          return book
+        }
+      });
+
+      this.setState({booksQuery: updatedShelves})
     });
   }
 

@@ -1,25 +1,23 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
-class SelectShelf extends Component {
+const SelectShelf = (props) => {
 
-  handleChange = (event) => {
+  function handleChange(event) {
     let shelf = event.target.value;
-    let book = this.props.book;
-    this.props.updateShelf(shelf, book);
+    let book = props.book;
+    props.updateShelf(shelf, book);
   }
 
-  render() {
-    return (
-      <select value={this.props.book.shelf} onChange={this.handleChange}>
-        <option value="none" disabled>Move to...</option>
-          <option value="currentlyReading">Currently Reading</option>
-          <option value="wantToRead">Want to Read</option>
-          <option value="read">Read</option>
-          <option value="none">None</option>
-      </select>
-    );
-  }
+  return (
+    <select value={props.book.shelf} onChange={handleChange}>
+      <option value="none" disabled>Move to...</option>
+        <option value="currentlyReading">Currently Reading</option>
+        <option value="wantToRead">Want to Read</option>
+        <option value="read">Read</option>
+        <option value="none">None</option>
+    </select>
+  )
 }
 
 export default SelectShelf;
